@@ -1,30 +1,53 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { LandingPage } from '../pages/landing/landing';
+import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+
+import { AuthData } from '../providers/auth-data';
+
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+
+export const firebaseConfig = {
+    apiKey: "AIzaSyAbCz1vzBk3cYOrNobVKFSzC6Umm7ARwHg",
+    authDomain: "dragonboat-house.firebaseapp.com",
+    databaseURL: "https://dragonboat-house.firebaseio.com",
+    storageBucket: "dragonboat-house.appspot.com",
+    messagingSenderId: "404529462975"
+}
+
+const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+}
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    LandingPage,
+    SignupPage,
+    LoginPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    LandingPage,
+    LoginPage,
+    SignupPage
   ],
-  providers: []
+  providers: [
+    AuthData
+  ]
 })
 export class AppModule {}
